@@ -1,0 +1,113 @@
+import React from "react";
+import "../styles/Projects.css";
+import FolderOpenRoundedIcon from "@mui/icons-material/FolderOpenRounded";
+import FadeInSection from "./FadeInSection";
+import ExternalLinks from "./ExternalLinks";
+import { Carousel } from "react-bootstrap";
+
+const githubProfile = "https://github.com/tedyclivel";
+const linkedinProfile = "https://linkedin.com/in/tedy-clivel-fokou-temfack-2474ba331";
+
+const spotlightProjects = [
+  { title: "Kouture & Maestro", desc: "A SaaS platform for tailors combining business management with a web marketplace.", tech: "Flutter, BLoC, Next.js, Supabase", image: "/assets/Kouture&Maestro.png", github: "https://github.com/tedyclivel/KoutureMaestro" },
+  { title: "TchopTime", desc: "A family kitchen management application with meal planning and shopping list generation.", tech: "React Native", image: "/assets/talltales.png", github: "https://github.com/tedyclivel/tchoptime-3", mobileImages: [1, 2, 3, 4, 5, 6, 7].map((number) => "/assets/recettte" + number + ".png") },
+  { title: "LexiFlow", desc: "A crossword puzzle game featuring interactive gameplay and a Duel mode.", tech: "Flutter", image: "/assets/nomansland.png", github: "https://github.com/tedyclivel/LexiFlow", mobileImages: [1, 2, 3, 4].map((number) => "/assets/lexi" + number + ".png") },
+  { title: "Iron Mind", desc: "A mobile learning application for creating personalized learning paths and tracking progress.", tech: "Flutter", image: "/assets/portfolio.png", github: "https://github.com/tedyclivel/roamap_cyber_security", mobileImages: [1, 2, 3, 4, 5, 6].map((number) => "/assets/iron" + number + ".png") },
+  { title: "Maestro", desc: "The mobile companion application for Kouture & Maestro, designed to help tailors manage their activity, orders and workflow from their phone.", tech: "Flutter, Dart, BLoC", image: "/assets/mobile1.jpg", github: "https://github.com/tedyclivel/Maestro", mobileImages: [1, 2, 3, 4, 5, 6, 7].map((number) => "/assets/mobile" + number + ".jpg") },
+];
+
+const projects = [
+  ...spotlightProjects.map(({ title, desc, tech, github }) => ({ title, desc, tech, github })),
+];
+
+const Projects = () => (
+  <div id="projects">
+    <div className="section-header">
+      <span className="section-title">/ projects</span>
+      <a href="https://github.com/tedyclivel" className="explore-link" target="_blank" rel="noopener noreferrer">
+        View GitHub
+      </a>
+    </div>
+    <div className="spotlight-projects-desktop">
+      <Carousel interval={null}>
+        {spotlightProjects.map((project) => (
+          <Carousel.Item key={project.title}>
+            {project.mobileImages ? (
+              <div className="desktop-project-gallery">
+                {project.mobileImages.map((image, imageIndex) => (
+                  <img
+                    key={image}
+                    src={image}
+                    alt={project.title + " mobile screen " + (imageIndex + 1)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <img className="d-block w-100" src={project.image} alt={project.title} />
+            )}
+            <Carousel.Caption>
+              <h3>{project.title}</h3>
+              <div>
+                {project.desc}
+                <div className="techStack">{project.tech}</div>
+              </div>
+              <ExternalLinks githubLink={project.github || githubProfile} openLink={linkedinProfile} />
+            </Carousel.Caption>
+          </Carousel.Item>
+        ))}
+      </Carousel>
+    </div>
+    <div className="spotlight-projects-mobile">
+      {spotlightProjects.map((project, i) => (
+        <FadeInSection key={project.title} delay={(i + 1) * 100 + "ms"}>
+          <div className="projects-card">
+            <div className="card-header">
+              <div className="folder-icon">
+                <FolderOpenRoundedIcon sx={{ fontSize: 35 }} />
+              </div>
+              <ExternalLinks githubLink={project.github || githubProfile} openLink={linkedinProfile} />
+            </div>
+            <div className="card-title">{project.title}</div>
+            <div className="spotlight-mobile-image">
+              <img src={project.image} alt={project.title} />
+            </div>
+            {project.mobileImages && (
+              <div className="mobile-project-gallery">
+                {project.mobileImages.map((image, imageIndex) => (
+                  <img
+                    key={image}
+                    src={image}
+                    alt={project.title + " mobile screen " + (imageIndex + 1)}
+                  />
+                ))}
+              </div>
+            )}
+            <div className="card-desc">{project.desc}</div>
+            <div className="card-tech">{project.tech}</div>
+          </div>
+        </FadeInSection>
+      ))}
+    </div>
+    <div className="project-container">
+      <ul className="projects-grid">
+        {projects.map((project, i) => (
+          <FadeInSection key={project.title} delay={(i + 1) * 100 + "ms"}>
+            <li className="projects-card">
+              <div className="card-header">
+                <div className="folder-icon">
+                  <FolderOpenRoundedIcon sx={{ fontSize: 35 }} />
+                </div>
+                <ExternalLinks githubLink={project.github || githubProfile} openLink={linkedinProfile} />
+              </div>
+              <div className="card-title">{project.title}</div>
+              <div className="card-desc">{project.desc}</div>
+              <div className="card-tech">{project.tech}</div>
+            </li>
+          </FadeInSection>
+        ))}
+      </ul>
+    </div>
+  </div>
+);
+
+export default Projects;
