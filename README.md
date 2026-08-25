@@ -2,10 +2,10 @@
   <img src="https://img.icons8.com/color/48/000000/magritte.png"/>
 </p>
 <h1 align="center">
-  gazijarin.com - v2
+  tedyclivel Portfolio - v1
 </h1>
 <p align="center">
-  The second iteration of <a href="https://gazijarin.com" target="_blank">gazijarin.com</a> built with Vite and React 19, leveraging Material UI v6 and Bootstrap 5.
+  The first iteration of <a href="https://portfolio.tedyclivel1.workers.dev/" target="_blank">https://portfolio.tedyclivel1.workers.dev/</a> built with Vite and React 19, leveraging Material UI v6 and Bootstrap 5.
 </p>
 <p align="center">
   <img src="src/assets/view.png" width="100%" alt="gazi-v2-view"/>

@@ -4,6 +4,7 @@ import FolderOpenRoundedIcon from "@mui/icons-material/FolderOpenRounded";
 import FadeInSection from "./FadeInSection";
 import ExternalLinks from "./ExternalLinks";
 import { Carousel } from "react-bootstrap";
+import portfolioPreview from "../assets/view.png";
 
 const githubProfile = "https://github.com/tedyclivel";
 const linkedinProfile = "https://linkedin.com/in/tedy-clivel-fokou-temfack-2474ba331";
@@ -14,6 +15,7 @@ const spotlightProjects = [
   { title: "LexiFlow", desc: "A crossword puzzle game featuring interactive gameplay and a Duel mode.", tech: "Flutter", image: "/assets/nomansland.png", github: "https://github.com/tedyclivel/LexiFlow", mobileImages: [1, 2, 3, 4].map((number) => "/assets/lexi" + number + ".png") },
   { title: "Iron Mind", desc: "A mobile learning application for creating personalized learning paths and tracking progress.", tech: "Flutter", image: "/assets/portfolio.png", github: "https://github.com/tedyclivel/roamap_cyber_security", mobileImages: [1, 2, 3, 4, 5, 6].map((number) => "/assets/iron" + number + ".png") },
   { title: "Maestro", desc: "The mobile companion application for Kouture & Maestro, designed to help tailors manage their activity, orders and workflow from their phone.", tech: "Flutter, Dart, BLoC", image: "/assets/mobile1.jpg", github: "https://github.com/tedyclivel/Maestro", mobileImages: [1, 2, 3, 4, 5, 6, 7].map((number) => "/assets/mobile" + number + ".jpg") },
+  { title: "Tedy Portfolio", desc: "A personal portfolio website presenting my experience, skills and software projects.", tech: "React, Vite, JavaScript, CSS, Cloudflare Pages", image: portfolioPreview, github: "https://github.com/tedyclivel/portfolio" },
 ];
 
 const projects = [
