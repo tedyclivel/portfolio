@@ -8,7 +8,7 @@
   The first iteration of <a href="https://portfolio.tedyclivel1.workers.dev/" target="_blank">https://portfolio.tedyclivel1.workers.dev/</a> built with Vite and React 19, leveraging Material UI v6 and Bootstrap 5.
 </p>
 <p align="center">
-  <img src="src/assets/view.png" width="100%" alt="gazi-v2-view"/>
+  <img src="src/assets/view.png" width="100%" alt="tedyclivel-v1-view"/>
 </p>
 
 ## 🛠 set-up
