@@ -1,48 +1,89 @@
-<p align="center">
-  <img src="https://img.icons8.com/color/48/000000/magritte.png"/>
-</p>
-<h1 align="center">
-  tedyclivel Portfolio - v1
-</h1>
-<p align="center">
-  The first iteration of <a href="https://portfolio.tedyclivel1.workers.dev/" target="_blank">https://portfolio.tedyclivel1.workers.dev/</a> built with Vite and React 19, leveraging Material UI v6 and Bootstrap 5.
-</p>
-<p align="center">
-  <img src="src/assets/view.png" width="100%" alt="tedyclivel-v1-view"/>
-</p>
+# Tedy Clivel — Software Engineer Portfolio
 
-## 🛠 set-up
+A bilingual, interactive portfolio for **Tedy Clivel Fokou Temfack**, a junior software engineer focused on reliable mobile and web products.
 
-1. Install the dependencies
+Built with React and Vite, the site presents engineering experience, selected projects, public GitHub work, and an interactive visual identity without sacrificing accessibility or responsive behaviour.
 
-   ```sh
-   npm install
-   ```
+## Highlights
 
-2. Start the development server
+- English-first interface with a French language switcher.
+- Selected-project showcase with case studies, external GitHub links, and full-screen image previews.
+- Responsive project galleries: six projects are shown initially, with an option to reveal the full collection.
+- Real technology logos for the engineering stack, including React, Flutter, React Native, TypeScript, Supabase, Next.js, AngularJS, and Three.js.
+- Keyboard-accessible navigation, meaningful image alternative text, visible focus states, and reduced-motion support.
+- Animated ASCII portrait and Three.js particle scenes.
+- Cursor-driven Three.js background rift: moving the mouse tears open the particle surface and leaves a short closing trail.
+- Scroll progress navigation, subtle ambient motion, and a custom portfolio scrollbar.
+- Optional keyboard and touch-friendly robot game mode that turns the portfolio into an explorable experience.
 
-   ```sh
-   npm run dev
-   ```
+## Tech stack
 
-## 🚀 build and run for production
+- React 19
+- Vite 8
+- Three.js
+- React Bootstrap and Bootstrap
+- Material UI icons
+- React Router
+- CSS
 
-1. Generate a full static production build
+## Local development
 
-   ```sh
-   npm run build
-   ```
+Install dependencies:
 
+```sh
+npm install
+```
 
-## 🎨 color codes
+Start the development server:
 
-| Color          | Hex                                                                |
-| -------------- | ------------------------------------------------------------------ |
-| Navy           | ![#0a192f](https://placehold.co/15/0a192f/0a192f.png) `#0a192f` |
-| Light Navy     | ![#112240](https://placehold.co/15/112240/112240.png) `#112240` |
-| Lightest Navy  | ![#233554](https://placehold.co/15/233554/233554.png) `#233554` |
-| Slate          | ![#8892b0](https://placehold.co/15/8892b0/8892b0.png) `#8892b0` |
-| Light Slate    | ![#a8b2d1](https://placehold.co/15/a8b2d1/a8b2d1.png) `#a8b2d1` |
-| Lightest Slate | ![#ccd6f6](https://placehold.co/15/ccd6f6/ccd6f6.png) `#ccd6f6` |
-| White          | ![#e6f1ff](https://placehold.co/15/e6f1ff/e6f1ff.png) `#e6f1ff` |
-| Green          | ![#64ffda](https://placehold.co/15/64ffda/64ffda.png) `#64ffda` |
+```sh
+npm run dev
+```
+
+Create an optimized production build:
+
+```sh
+npm run build
+```
+
+Run the code-quality checks:
+
+```sh
+npm run lint
+```
+
+Preview the production build locally:
+
+```sh
+npm run preview
+```
+
+## Project structure
+
+```text
+src/
+  components/       Portfolio sections, project modals, game mode, and Three.js scenes
+  styles/           Component and global visual styles
+  assets/projects/  Portfolio project assets bundled by Vite
+public/assets/      Optimized screenshots organised by project
+```
+
+## Accessibility and performance
+
+The interface is built around semantic links and buttons, descriptive labels, keyboard focus visibility, lazy-loaded project imagery, and responsive layouts. Motion-heavy effects respect the user’s `prefers-reduced-motion` setting. Three.js modules are loaded dynamically so the initial page can render before interactive visual effects initialise.
+
+## Colour system
+
+| Token | Value | Use |
+| --- | --- | --- |
+| Navy | `#0a192f` | Main background |
+| Dark Navy | `#020c1b` | Deep surfaces and contrast |
+| Light Navy | `#112240` | Cards and panels |
+| Lightest Navy | `#233554` | Borders and elevated states |
+| Slate | `#8892b0` | Secondary text |
+| Lightest Slate | `#ccd6f6` | Primary text |
+| Mint | `#64ffda` | Interactive accents |
+
+## License
+
+This repository is private and unlicensed. All rights reserved.
