@@ -8,6 +8,8 @@ import NavBar from "./components/NavBar";
 import SidebarNav from "./components/SidebarNav";
 import RobotGame from "./components/RobotGame";
 import EngineeringHighlights from "./components/EngineeringHighlights";
+import ScrollProgress from "./components/ScrollProgress";
+import BackgroundWave from "./components/BackgroundWave";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import "./App.css";
@@ -33,7 +35,16 @@ function App() {
 
   return (
     <div className="App">
+      <div className="ambient-background" aria-hidden="true">
+        <span className="ambient-orb" />
+        <span className="ambient-particle ambient-particle--one" />
+        <span className="ambient-particle ambient-particle--two" />
+        <span className="ambient-particle ambient-particle--three" />
+        <span className="ambient-particle ambient-particle--four" />
+      </div>
+      <BackgroundWave />
       <NavBar language={language} onLanguageChange={setLanguage} />
+      <ScrollProgress language={language} />
       <div className="game-toggle-fixed">
         <div className="game-toggle-row">
           <button

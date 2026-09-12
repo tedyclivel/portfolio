@@ -5,14 +5,17 @@
 .fade-in-section {
   opacity: 0;
   transform: translateY(20px);
+  filter: blur(6px);
   transition: 
     opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fade-in-section.is-visible {
   opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
 }
 
 .fade-in-section.is-visible > *:nth-child(1) { transition-delay: 0s; }
@@ -24,6 +27,7 @@
   .fade-in-section {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
 }
@@ -37,7 +41,78 @@
   min-height: 100vh;
   width: 100%;
   margin: 0;
+  position: relative;
+  isolation: isolate;
 }
+
+.ambient-background {
+  position: fixed;
+  z-index: -2;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(100, 255, 218, 0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(100, 255, 218, 0.018) 1px, transparent 1px);
+  background-size: 56px 56px;
+  animation: grid-drift 26s linear infinite;
+  mask-image: linear-gradient(to bottom, black, transparent 88%);
+}
+
+.ambient-background::before,
+.ambient-background::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.ambient-background::before {
+  inset: -35% -20%;
+  background: linear-gradient(110deg, transparent 44%, rgba(100, 255, 218, 0.055) 49%, transparent 54%);
+  transform: translateX(-55%);
+  animation: light-sweep 14s ease-in-out infinite;
+}
+
+.ambient-background::after {
+  inset: 0;
+  opacity: 0.5;
+  background-image: radial-gradient(circle, rgba(100, 255, 218, 0.65) 1px, transparent 1.5px);
+  background-size: 130px 130px;
+  animation: star-drift 18s linear infinite;
+}
+
+.ambient-orb {
+  position: absolute;
+  width: 44vw;
+  height: 44vw;
+  border-radius: 50%;
+  bottom: -24vw;
+  left: -17vw;
+  background: radial-gradient(circle, rgba(100, 255, 218, 0.12), transparent 68%);
+  filter: blur(16px);
+  animation: ambient-drift 18s ease-in-out infinite alternate;
+}
+
+.ambient-particle {
+  position: absolute;
+  z-index: 1;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green-bright);
+  box-shadow: 0 0 14px rgba(100, 255, 218, 0.9);
+  opacity: 0;
+  animation: float-particle 12s ease-in-out infinite;
+}
+
+.ambient-particle--one { top: 24%; left: 11%; animation-delay: -2s; }
+.ambient-particle--two { top: 58%; left: 78%; animation-delay: -5s; }
+.ambient-particle--three { top: 75%; left: 34%; animation-delay: -8s; }
+.ambient-particle--four { top: 37%; left: 58%; animation-delay: -10s; }
+
+@keyframes ambient-drift { to { transform: translate3d(-4vw, 5vh, 0) scale(1.12); } }
+@keyframes grid-drift { to { background-position: 56px 56px, 56px 56px; } }
+@keyframes light-sweep { 0%, 20% { transform: translateX(-55%) rotate(-6deg); opacity: 0; } 45% { opacity: 1; } 70%, 100% { transform: translateX(55%) rotate(-6deg); opacity: 0; } }
+@keyframes star-drift { to { background-position: 130px -130px; } }
+@keyframes float-particle { 0%, 100% { opacity: 0; transform: translate3d(0, 20px, 0) scale(0.5); } 20%, 75% { opacity: 0.82; } 50% { transform: translate3d(42px, -100px, 0) scale(1.4); } }
 
 .App-logo {
   height: 40vmin;
@@ -55,6 +130,8 @@ a:hover {
 
 #content {
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .rs-steps-horizontal .rs-steps-item-content {
@@ -69,6 +146,10 @@ a:hover {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-background, .ambient-background::before, .ambient-background::after, .ambient-background span { animation: none; }
 }
 
 .App-header {

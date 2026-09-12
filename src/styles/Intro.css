@@ -15,7 +15,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  isolation: isolate;
 }
+
+.hero-scene { position: absolute; z-index: -1; inset: -4%; opacity: 0.72; filter: drop-shadow(0 0 28px rgba(100, 255, 218, 0.16)); }
+.hero-scene canvas { display: block; width: 100%; height: 100%; }
+.simulation-container { position: relative; z-index: 1; }
 
 .intro-block {
   display: flex;
@@ -24,6 +30,11 @@
   text-align: left;
   max-width: 550px;
 }
+
+.intro-terminal { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 6px; color: var(--light-slate); font: 14px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: -0.02em; }
+.intro-terminal span { color: var(--green-bright); }
+.intro-terminal i { width: 7px; height: 7px; border-radius: 50%; background: var(--green-bright); box-shadow: 0 0 12px rgba(100, 255, 218, 0.8); animation: status-pulse 2s ease-in-out infinite; }
+@keyframes status-pulse { 50% { opacity: 0.35; transform: scale(0.8); } }
 
 /* Hide any possible cursor from react-type-animation */
 [class*="type-animation-cursor"] {
@@ -74,6 +85,12 @@
   padding-bottom: 40px;
   line-height: 1.5;
 }
+
+.intro-role { margin-top: -10px; color: var(--green-bright); font: 16px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; letter-spacing: 0.08em; }
+.intro-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; }
+.intro-work { display: inline-flex; align-items: center; gap: 10px; color: var(--lightest-slate); font: bold 16px "NTR", sans-serif; }
+.intro-work span { color: var(--green-bright); transition: transform 180ms ease; }
+.intro-work:hover span { transform: translateY(4px); }
 
 .intro-contact {
   display: inline-flex;
@@ -138,6 +155,10 @@
     text-align: center;
   }
 
+  .intro-terminal { justify-content: center; font-size: 12px; }
+  .intro-role { margin-top: 0; font-size: 12px; text-align: center; }
+  .intro-actions { justify-content: center; gap: 18px; }
+
   .intro-title,
   .intro-name {
     font-size: 56px;
@@ -161,6 +182,11 @@
     font-size: 16px;
     padding: 10px 24px;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-terminal i, .intro-cursor { animation: none; }
+  .intro-work span { transition: none; }
 }
 
 /* Small mobile */

@@ -30,7 +30,15 @@ const Projects = ({ language }) => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
-  const projects = projectDetails.map((project) => withLanguage(project, language));
+  const previewFallbacks = {
+    TchopTime: "/assets/tchoptime/recettte1.png",
+    LexiFlow: "/assets/lexiflow/lexi1.png",
+    "Iron Mind": "/assets/iron-mind/iron1.png",
+  };
+  const projects = projectDetails.map((project) => withLanguage({
+    ...project,
+    image: previewFallbacks[project.title] || project.image,
+  }, language));
   const visibleProjects = showAllProjects ? projects : projects.slice(0, 6);
   const copy = language === "fr" ? { title: "/ projets", github: "Voir GitHub", study: "Voir l’étude de cas", showAll: "Voir tous les projets", showLess: "Afficher moins" } : { title: "/ projects", github: "View GitHub", study: "View case study", showAll: "View all projects", showLess: "Show fewer" };
   const openImage = (image, alt) => setSelectedImage({ image, alt });
