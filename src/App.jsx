@@ -12,13 +12,15 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import "./App.css";
 import "./styles/Global.css";
-import "./styles/RobotGame.css";
 
 function App() {
   const { pathname } = useLocation();
   const [gameActive, setGameActive] = useState(false);
   const [showGameInfo, setShowGameInfo] = useState(false);
   const [language, setLanguage] = useState(() => localStorage.getItem("portfolio-language") || "en");
+  const gameCopy = language === "fr"
+    ? { enable: "Activer le mode jeu", disable: "Désactiver le mode jeu", mode: "mode jeu", how: "comment jouer", move: "bouger", jump: "sauter", explore: "défilement automatique", goal: "récupère les cinq neurones à travers le portfolio" }
+    : { enable: "Enable game mode", disable: "Disable game mode", mode: "game mode", how: "how to play", move: "move", jump: "jump", explore: "auto-scroll", goal: "recover five neurons across the portfolio" };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,17 +38,23 @@ function App() {
         <div className="game-toggle-row">
           <button
             className={`game-toggle-btn${gameActive ? " game-toggle-btn--on" : ""}`}
-            onClick={() => setGameActive((a) => !a)}
-            title={gameActive ? "Disable game mode" : "Enable game mode"}
+            onClick={() => setGameActive((active) => { if (active) setShowGameInfo(false); return !active; })}
+            title={gameActive ? gameCopy.disable : gameCopy.enable}
+            aria-pressed={gameActive}
           >
             <span className="game-toggle-dot" />
-            game mode
+            {gameCopy.mode}
           </button>
           {gameActive && (
             <button
               className="game-info-btn"
               onMouseEnter={() => setShowGameInfo(true)}
               onMouseLeave={() => setShowGameInfo(false)}
+              onFocus={() => setShowGameInfo(true)}
+              onBlur={() => setShowGameInfo(false)}
+              onClick={() => setShowGameInfo(true)}
+              aria-label={gameCopy.how}
+              aria-expanded={showGameInfo}
             >
               i
             </button>
@@ -54,25 +62,25 @@ function App() {
         </div>
         {showGameInfo && gameActive && (
           <div className="robot-game-info">
-            <div className="robot-game-info-title">how to play</div>
+            <div className="robot-game-info-title">{gameCopy.how}</div>
             <div className="robot-game-info-row">
               <span className="robot-game-key">← →</span>
-              <span>move</span>
+              <span>{gameCopy.move}</span>
             </div>
             <div className="robot-game-info-row">
               <span className="robot-game-key">space</span>
-              <span>jump</span>
+              <span>{gameCopy.jump}</span>
             </div>
             <div className="robot-game-info-row">
               <span className="robot-game-key">scroll</span>
-              <span>explore</span>
+              <span>{gameCopy.explore}</span>
             </div>
-        <div className="robot-game-info-goal">explore the portfolio and have fun</div>
+        <div className="robot-game-info-goal">{gameCopy.goal}</div>
           </div>
         )}
       </div>
       <SidebarNav language={language} />
-      <RobotGame active={gameActive} />
+      {gameActive && <RobotGame active language={language} />}
       <div id="content">
         <Routes>
           <Route

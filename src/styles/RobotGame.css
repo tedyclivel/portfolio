@@ -182,6 +182,10 @@
 .robot-game-status--dead {
   border-color: rgba(255, 100, 100, 0.35);
 }
+.robot-game-status--start,
+.robot-game-status--pause {
+  border-color: rgba(100, 255, 218, 0.35);
+}
 
 .robot-game-status-title {
   font-family: "NTR", sans-serif;
@@ -217,6 +221,38 @@
 .robot-game-status-btn:hover {
   background: rgba(100, 255, 218, 0.07);
   transform: translateY(-2px);
+}
+
+.robot-game-text-btn {
+  display: block;
+  margin: 12px auto 0;
+  border: 0;
+  background: transparent;
+  color: var(--slate);
+  font: 13px "NTR", sans-serif;
+  cursor: pointer;
+}
+
+.robot-game-text-btn:hover { color: var(--green-bright); }
+
+.robot-game-legend {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: -8px 0 18px;
+  color: var(--light-slate);
+  font: 12px "NTR", sans-serif;
+}
+
+.robot-game-legend span:nth-child(1) { color: #bf9fd4; }
+.robot-game-legend span:nth-child(2) { color: var(--green-bright); }
+.robot-game-legend span:nth-child(3) { color: var(--yellow); }
+
+.robot-game-status-unlock {
+  max-width: 260px;
+  margin: 0 auto 16px;
+  color: var(--green-bright);
+  font: 14px "NTR", sans-serif;
 }
 
 .robot-game-status-hint {
@@ -276,18 +312,77 @@
   color: var(--light-slate);
 }
 
+.robot-game-hud {
+  position: fixed;
+  top: 116px;
+  right: 20px;
+  z-index: 1031;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--slate);
+  font: 12px "NTR", sans-serif;
+  letter-spacing: 0.6px;
+  pointer-events: all;
+}
+
+.robot-game-hud button {
+  border: 1px solid rgba(136, 146, 176, 0.35);
+  border-radius: 12px;
+  background: rgba(10, 25, 47, 0.85);
+  color: var(--light-slate);
+  font: inherit;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+.robot-game-hud button:hover { border-color: var(--green-bright); color: var(--green-bright); }
+
+.robot-game-reward {
+  position: fixed;
+  top: 156px;
+  right: 20px;
+  z-index: 1031;
+  padding: 4px 10px;
+  border-left: 2px solid var(--green-bright);
+  background: rgba(10, 25, 47, 0.85);
+  color: var(--light-slate);
+  font: 13px "NTR", sans-serif;
+  pointer-events: none;
+}
+
+.mobile-game-controls { display: none; }
+
 @keyframes cell-glow {
   0%, 100% { box-shadow: 0 0 5px rgba(144, 96, 192, 0.5); }
   50%       { box-shadow: 0 0 10px rgba(144, 96, 192, 0.9); }
 }
 
 @media (max-width: 800px) {
-  .game-toggle-fixed,
-  .game-info-btn,
-  .robot-game-canvas,
-  .robot-game-info,
+  .game-toggle-fixed { top: 62px; left: 12px; }
+  .game-info-btn, .robot-game-info { display: none; }
+  .robot-game-status { width: calc(100% - 40px); padding: 26px 24px; }
+  .cell-counter { top: 62px; right: 12px; }
+  .robot-game-hud { top: 104px; right: 12px; flex-wrap: wrap; justify-content: flex-end; }
+  .robot-game-reward { top: 144px; right: 12px; }
+  .mobile-game-controls { position: fixed; z-index: 1031; right: 14px; bottom: 18px; display: flex; gap: 10px; pointer-events: all; }
+  .mobile-game-controls button { width: 48px; height: 48px; border: 1px solid rgba(100, 255, 218, 0.45); border-radius: 50%; background: rgba(10, 25, 47, 0.9); color: var(--green-bright); font-size: 23px; touch-action: none; }
+  .robot-game-legend { flex-wrap: wrap; gap: 6px 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
   .robot-game-status,
-  .cell-counter {
-    display: none;
-  }
+  .robot-game-info,
+  .game-toggle-dot,
+  .cell-counter-pip { animation: none !important; }
+}
+
+.robot-game-layer--reduced .robot-game-status,
+.robot-game-layer--reduced .robot-game-info,
+.robot-game-layer--reduced .cell-counter-pip {
+  animation: none !important;
+}
+
+.game-reduced-motion .game-toggle-dot {
+  animation: none !important;
 }
