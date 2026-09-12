@@ -3,14 +3,14 @@ import JobList from "./JobList";
 import "../styles/Experience.css";
 import FadeInSection from "./FadeInSection";
 
-const Experience = () => {
+const Experience = ({ language }) => {
   return (
     <div id="experience">
       <FadeInSection>
         <div className="section-header ">
-          <span className="section-title">/ experience</span>
+          <span className="section-title">{language === "en" ? "/ experience" : "/ expérience"}</span>
         </div>
-        <JobList />
+        <JobList language={language} />
       </FadeInSection>
     </div>
   );

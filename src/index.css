@@ -1,6 +1,8 @@
 html {
   box-sizing: border-box;
   overflow-x: hidden;
+  scrollbar-color: var(--lightest-navy) var(--dark-navy);
+  scrollbar-width: thin;
 }
 
 *,
@@ -22,7 +24,49 @@ body {
   color: #ccd6f6;
 }
 
+/* Professional, high-contrast scrollbar matching the portfolio palette. */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-navy);
+}
+
+::-webkit-scrollbar-thumb {
+  min-height: 48px;
+  border: 3px solid var(--dark-navy);
+  border-radius: 999px;
+  background: var(--lightest-navy);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--green-bright);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--light-slate);
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 9999;
+  top: 8px;
+  left: 8px;
+  padding: 8px 12px;
+  transform: translateY(-200%);
+  border-radius: 4px;
+  background: var(--green-bright);
+  color: var(--dark-navy);
+  font-weight: bold;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--white);
 }

@@ -44,28 +44,54 @@ function a11yProps(index, isMobile) {
   }
 }
 
-const JobList = () => {
+const JobList = ({ language }) => {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const experienceItems = {
+  const experienceItems = language === "fr" ? {
+    OUFAREZ: {
+      jobTitle: "Développeur front-end Flutter @",
+      duration: "CONTRAT DE 3 MOIS",
+      desc: [
+        "Conçu et intégré des interfaces mobiles Flutter à partir des besoins produit et des maquettes.",
+        "Collaboré avec l’équipe technique pour transformer les retours utilisateurs en améliorations de fonctionnalités.",
+        "Diagnostiqué et corrigé des défauts d’interface afin d’améliorer la fiabilité et l’expérience utilisateur.",
+      ],
+    },
+    ARITED: {
+      jobTitle: "Stagiaire développeur mobile Flutter @",
+      duration: "JUIN 2025 - SEPT. 2025",
+      desc: [
+        "Développé des composants Flutter et Dart réutilisables pour accélérer la livraison des fonctionnalités mobiles.",
+        "Débogué des problèmes d’interface et de comportement pour assurer une expérience cohérente sur mobile.",
+        "Travaillé avec l’équipe de développement sur l’évolution des fonctionnalités et la qualité du produit.",
+      ],
+    },
+    Innovatech: {
+      jobTitle: "Stagiaire systèmes embarqués @",
+      duration: "JUIL. 2022 - AOÛT 2022",
+      desc: [
+        "Construit des circuits électroniques et développé des programmes Arduino de contrôle pour des exercices de systèmes embarqués.",
+      ],
+    },
+  } : {
     OUFAREZ: {
       jobTitle: "Flutter Front-End Developer @",
       duration: "3-MONTH CONTRACT",
       desc: [
-        "Developed and integrated mobile user interfaces using Flutter.",
-        "Contributed to feature design and user requirements analysis.",
-        "Collaborated with the technical team, resolved bugs, and improved the overall user experience.",
+        "Built and integrated Flutter mobile interfaces from product requirements and design specifications.",
+        "Partnered with the technical team to translate user feedback into feature improvements.",
+        "Diagnosed and resolved UI defects to improve product reliability and the user experience.",
       ],
     },
     ARITED: {
       jobTitle: "Flutter Mobile Developer Intern @",
       duration: "JUN 2025 - SEP 2025",
       desc: [
-        "Developed mobile user interfaces and reusable components using Flutter and Dart.",
-        "Debugged applications and resolved UI and interface issues.",
-        "Collaborated with the development team on application development and feature improvements.",
+        "Developed reusable Flutter and Dart components to speed up delivery of mobile features.",
+        "Debugged UI and application-behavior issues to deliver a consistent mobile experience.",
+        "Worked with the development team on feature iteration and product quality improvements.",
       ],
     },
     Innovatech: {

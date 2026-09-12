@@ -1,7 +1,8 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 
 // Module-level cache to persist between remounts
 const memoryCache = {};
+const asciiChars = " .:-=+*#%@".split("");
 
 const calculateSize = (width) => {
   if (width <= 480) {
@@ -21,9 +22,6 @@ const AsciiPortrait = () => {
   const startTimeRef = useRef(null);
   const [size, setSize] = useState(() => calculateSize(window.innerWidth));
   const [dataReady, setDataReady] = useState(false);
-
-  // ASCII character set from sparse to dense
-  const chars = " .:-=+*#%@".split("");
 
   useEffect(() => {
     const updateSize = () => {
@@ -52,7 +50,7 @@ const AsciiPortrait = () => {
     }));
   };
 
-  const processImage = (img, targetSize) => {
+  const processImage = useCallback((img, targetSize) => {
     const canvasWidth = targetSize;
     const canvasHeight = targetSize;
     const offscreen = document.createElement("canvas");
@@ -94,19 +92,19 @@ const AsciiPortrait = () => {
           const g = pixels[i + 1];
           const b = pixels[i + 2];
           const brightness = (r + g + b) / (3 * 255);
-          const charIndex = Math.floor(brightness * (chars.length - 1));
+          const charIndex = Math.floor(brightness * (asciiChars.length - 1));
           
           rawParticles.push({
             x: Number(x.toFixed(1)),
             y: Number(y.toFixed(1)),
-            char: chars[charIndex],
+            char: asciiChars[charIndex],
             alpha: Number((0.4 + brightness * 0.6).toFixed(2)),
           });
         }
       }
     }
     return rawParticles;
-  };
+  }, []);
 
   useEffect(() => {
     const isMobileSize = size <= 280;
@@ -114,8 +112,8 @@ const AsciiPortrait = () => {
     // Reuse processed data for the current size when available.
     if (memoryCache[size]) {
       particlesRef.current = createParticlesFromRaw(memoryCache[size], isMobileSize);
-      setDataReady(true);
       startTimeRef.current = performance.now();
+      queueMicrotask(() => setDataReady(true));
       return;
     }
 
@@ -130,7 +128,7 @@ const AsciiPortrait = () => {
       setDataReady(true);
       startTimeRef.current = performance.now();
     };
-  }, [size]);
+  }, [size, processImage]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -269,6 +267,8 @@ const AsciiPortrait = () => {
   return (
     <canvas
       ref={canvasRef}
+      role="img"
+      aria-label="Interactive ASCII portrait of Tedy Clivel"
       className="simulation-container"
       style={{
         width: `${size}px`,

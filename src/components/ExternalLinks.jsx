@@ -11,6 +11,7 @@ const ExternalLinks = ({ githubLink, openLink }) => {
           href={githubLink}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="View source on GitHub"
         >
           <GitHubIcon
             sx={{
@@ -26,6 +27,7 @@ const ExternalLinks = ({ githubLink, openLink }) => {
           href={openLink}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Open LinkedIn profile"
         >
           <OpenInBrowserIcon
             sx={{

@@ -5,7 +5,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import "../styles/NavBar.css";
 
-const NavBar = () => {
+const NavBar = ({ language, onLanguageChange }) => {
   const [expanded, setExpanded] = useState(false);
   const scrollPos = useRef(0);
 
@@ -40,24 +40,34 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto" onSelect={() => setExpanded(false)}>
-            <Nav.Link href="/#intro">Home</Nav.Link>
-            <Nav.Link href="/#about">About</Nav.Link>
-            <Nav.Link href="/#experience">Experience</Nav.Link>
-            <Nav.Link href="/#projects">Projects</Nav.Link>
+            <Nav.Link href="/#intro">{language === "en" ? "Home" : "Accueil"}</Nav.Link>
+            <Nav.Link href="/#about">{language === "en" ? "About" : "À propos"}</Nav.Link>
+            <Nav.Link href="/#experience">{language === "en" ? "Experience" : "Expérience"}</Nav.Link>
+            <Nav.Link href="/#projects">{language === "en" ? "Projects" : "Projets"}</Nav.Link>
           </Nav>
           <Nav className="ms-auto" onSelect={() => setExpanded(false)}>
-            <Nav.Link href="mailto:tedyclivel1@gmail.com">
+            <Nav.Link href="mailto:tedyclivel1@gmail.com" aria-label="Email Tedy Clivel">
               <EmailRoundedIcon style={{ fontSize: 20 }} />
             </Nav.Link>
-            <Nav.Link href="https://github.com/tedyclivel" target="_blank">
+            <Nav.Link href="https://github.com/tedyclivel" target="_blank" rel="noopener noreferrer" aria-label="Tedy Clivel on GitHub">
               <GitHubIcon style={{ fontSize: 19 }} />
             </Nav.Link>
             <Nav.Link
               href="https://linkedin.com/in/tedy-clivel-fokou-temfack-2474ba331"
               target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Tedy Clivel on LinkedIn"
             >
               <LinkedInIcon style={{ fontSize: 21 }} />
             </Nav.Link>
+            <button
+              type="button"
+              className="language-switcher"
+              onClick={() => onLanguageChange(language === "en" ? "fr" : "en")}
+              aria-label={language === "en" ? "Passer en français" : "Switch to English"}
+            >
+              {language === "en" ? "FR" : "EN"}
+            </button>
           </Nav>
         </Navbar.Collapse>
       </Container>

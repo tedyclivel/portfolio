@@ -470,13 +470,14 @@ const RobotGame = ({ active }) => {
       canvas.height = window.innerHeight;
     };
     window.addEventListener("resize", onResize);
+    const keys = keysRef.current;
 
     return () => {
       cancelAnimationFrame(animRef.current);
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup",   onKeyUp);
       window.removeEventListener("resize",  onResize);
-      keysRef.current.clear();
+      keys.clear();
       jumpLatchRef.current = false;
     };
   }, [active, restartKey, getPlatforms, restart]);

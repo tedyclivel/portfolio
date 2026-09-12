@@ -21,6 +21,9 @@
   position: relative;
   padding-left: 20px;
   font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: var(--slate);
 }
 
@@ -29,6 +32,13 @@
   color: var(--green-bright);
   position: absolute;
   left: 0;
+}
+
+.tech-logo {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  flex: 0 0 auto;
 }
 
 .about-content {

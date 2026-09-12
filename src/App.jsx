@@ -7,6 +7,7 @@ import Credits from "./components/Credits";
 import NavBar from "./components/NavBar";
 import SidebarNav from "./components/SidebarNav";
 import RobotGame from "./components/RobotGame";
+import EngineeringHighlights from "./components/EngineeringHighlights";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import "./App.css";
@@ -17,14 +18,20 @@ function App() {
   const { pathname } = useLocation();
   const [gameActive, setGameActive] = useState(false);
   const [showGameInfo, setShowGameInfo] = useState(false);
+  const [language, setLanguage] = useState(() => localStorage.getItem("portfolio-language") || "en");
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  useEffect(() => {
+    localStorage.setItem("portfolio-language", language);
+    document.documentElement.lang = language;
+  }, [language]);
+
   return (
     <div className="App">
-      <NavBar />
+      <NavBar language={language} onLanguageChange={setLanguage} />
       <div className="game-toggle-fixed">
         <div className="game-toggle-row">
           <button
@@ -64,7 +71,7 @@ function App() {
           </div>
         )}
       </div>
-      <SidebarNav />
+      <SidebarNav language={language} />
       <RobotGame active={gameActive} />
       <div id="content">
         <Routes>
@@ -72,11 +79,12 @@ function App() {
             path="/"
             element={
               <>
-                <Intro />
-                <About />
-                <Experience />
-                <Projects />
-                <Credits />
+                <Intro language={language} />
+                <About language={language} />
+                <Experience language={language} />
+                <EngineeringHighlights language={language} />
+                <Projects language={language} />
+                <Credits language={language} />
               </>
             }
           />

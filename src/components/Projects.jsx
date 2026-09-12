@@ -1,116 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Projects.css";
 import FolderOpenRoundedIcon from "@mui/icons-material/FolderOpenRounded";
 import FadeInSection from "./FadeInSection";
 import ExternalLinks from "./ExternalLinks";
+import ProjectDetailsModal from "./ProjectDetailsModal";
+import ImageLightbox from "./ImageLightbox";
 import { Carousel } from "react-bootstrap";
 import portfolioPreview from "../assets/projects/tedy-portfolio/cover.png";
 
 const githubProfile = "https://github.com/tedyclivel";
 const linkedinProfile = "https://linkedin.com/in/tedy-clivel-fokou-temfack-2474ba331";
 
-const spotlightProjects = [
-  { title: "Growth OS", desc: "A personal productivity app that turns long-term goals into scheduled focus sessions, tracks daily habits, and provides progress reviews.", tech: "React, TypeScript, Vite, Tailwind CSS", image: "/assets/growth_os/img1.png", mobileImages: [1, 2, 3, 4, 5].map((number) => "/assets/growth_os/img" + number + ".png") },
-  { title: "Kouture & Maestro", desc: "A SaaS platform for tailors combining business management with a web marketplace.", tech: "Flutter, BLoC, Next.js, Supabase", image: "/assets/kouture-maestro/cover.png", github: "https://github.com/tedyclivel/KoutureMaestro" },
-  { title: "TchopTime", desc: "A family kitchen management application with meal planning and shopping list generation.", tech: "React Native", image: "/assets/tchoptime/talltales.png", github: "https://github.com/tedyclivel/tchoptime-3", mobileImages: [1, 2, 3, 4, 5, 6, 7].map((number) => "/assets/tchoptime/recettte" + number + ".png") },
-  { title: "LexiFlow", desc: "A crossword puzzle game featuring interactive gameplay and a Duel mode.", tech: "Flutter", image: "/assets/lexiflow/nomansland.png", github: "https://github.com/tedyclivel/LexiFlow", mobileImages: [1, 2, 3, 4].map((number) => "/assets/lexiflow/lexi" + number + ".png") },
-  { title: "Iron Mind", desc: "A mobile learning application for creating personalized learning paths and tracking progress.", tech: "Flutter", image: "/assets/iron-mind/portfolio.png", github: "https://github.com/tedyclivel/roamap_cyber_security", mobileImages: [1, 2, 3, 4, 5, 6].map((number) => "/assets/iron-mind/iron" + number + ".png") },
-  { title: "Maestro", desc: "The mobile companion application for Kouture & Maestro, designed to help tailors manage their activity, orders and workflow from their phone.", tech: "Flutter, Dart, BLoC", image: "/assets/maestro/mobile1.jpg", github: "https://github.com/tedyclivel/Maestro", mobileImages: [1, 2, 3, 4, 5, 6, 7].map((number) => "/assets/maestro/mobile" + number + ".jpg") },
-  { title: "Tedy Portfolio", desc: "A personal portfolio website presenting my experience, skills and software projects.", tech: "React, Vite, JavaScript, CSS, Cloudflare Pages", image: portfolioPreview, github: "https://github.com/tedyclivel/portfolio" },
+const projectDetails = [
+  { title: "Growth OS", tech: "React, TypeScript, Vite, Tailwind CSS", image: "/assets/growth_os/img1.png", github: "https://github.com/tedyclivel/Growth_OS", mobileImages: [1, 2, 3, 4, 5].map((n) => `/assets/growth_os/img${n}.png`), en: { desc: "A personal productivity app that turns long-term goals into scheduled focus sessions, tracks daily habits, and provides progress reviews.", challenge: "Keeping goals, time blocks, habits, and weekly reflection in separate tools makes consistency difficult.", solution: "Designed a unified personal operating system around daily execution, calendar planning, goal prioritisation, habits, and review.", engineering: ["Structured responsive workflows for five core product views.", "Modelled progress around scheduled sessions and completed habits.", "Designed an information-dense mobile experience without sacrificing scannability."], impact: "Gives users one deliberate loop for planning work, following through, and reviewing progress." }, fr: { desc: "Une application de productivité personnelle qui transforme les objectifs long terme en sessions planifiées, suit les habitudes et propose des bilans.", challenge: "Suivre ses objectifs, créneaux, habitudes et bilans dans des outils séparés nuit à la régularité.", solution: "Conception d’un système personnel unifié autour de l’exécution quotidienne, du planning, des objectifs, des habitudes et du bilan.", engineering: ["Parcours responsive structurés autour de cinq écrans produit.", "Modélisation de la progression à partir des sessions planifiées et habitudes validées.", "Interface mobile dense mais facile à parcourir."], impact: "Propose une boucle unique pour planifier, agir et analyser ses progrès." } },
+  { title: "Kouture & Maestro", tech: "Flutter, BLoC, Next.js, Supabase", image: "/assets/kouture-maestro/cover.png", github: "https://github.com/tedyclivel/KoutureMaestro", en: { desc: "A SaaS platform that helps tailors manage their business operations and sell through a web marketplace.", challenge: "Tailors need one place to manage orders and their customer-facing marketplace.", solution: "Contributed to a SaaS workflow combining mobile business management with a web marketplace.", engineering: ["Flutter client architecture with BLoC state management.", "Next.js web experience backed by Supabase services.", "Product flows focused on orders, activity, and marketplace operations."], impact: "Reduces the fragmentation between day-to-day tailoring operations and customer discovery." }, fr: { desc: "Une plateforme SaaS qui aide les couturiers à gérer leur activité et à vendre via une marketplace web." } },
+  { title: "TchopTime", tech: "React Native", image: "/assets/tchoptime/talltales.png", github: "https://github.com/tedyclivel/tchoptime-3", mobileImages: [1, 2, 3, 4, 5, 6, 7].map((n) => `/assets/tchoptime/recettte${n}.png`), en: { desc: "A family kitchen-management application for meal planning and shopping-list preparation.", challenge: "Meal planning often creates repetitive decisions and disconnected grocery lists.", solution: "Built a mobile-first flow for organising meals and generating the information needed for shopping.", engineering: ["React Native interfaces designed for everyday, quick interactions.", "Recipe and meal-plan screens organised as a coherent mobile journey.", "Gallery-driven product documentation for key user flows."], impact: "Makes household meal preparation easier to plan and act on." }, fr: { desc: "Une application familiale de gestion de cuisine pour planifier les repas et préparer les listes de courses." } },
+  { title: "LexiFlow", tech: "Flutter", image: "/assets/lexiflow/nomansland.png", github: "https://github.com/tedyclivel/LexiFlow", mobileImages: [1, 2, 3, 4].map((n) => `/assets/lexiflow/lexi${n}.png`), en: { desc: "An interactive crossword game featuring puzzle gameplay and a Duel mode.", challenge: "A crossword experience needs to keep grid interactions understandable while supporting competitive play.", solution: "Created a Flutter game experience with interactive puzzle mechanics and a dedicated Duel mode.", engineering: ["Interactive mobile game UI built in Flutter.", "Puzzle-focused screens designed around clarity and feedback.", "Separate experience for Duel-mode gameplay."], impact: "Turns a traditional word puzzle into an accessible mobile game with social competition." }, fr: { desc: "Un jeu de mots croisés interactif avec des mécaniques de puzzle et un mode Duel." } },
+  { title: "Iron Mind", tech: "Flutter", image: "/assets/iron-mind/portfolio.png", github: "https://github.com/tedyclivel/roamap_cyber_security", mobileImages: [1, 2, 3, 4, 5, 6].map((n) => `/assets/iron-mind/iron${n}.png`), en: { desc: "A mobile learning app for creating personalised study paths and tracking learning progress.", challenge: "Self-directed learners need a practical way to structure goals and see progress over time.", solution: "Designed a learning experience centred on personalised paths, milestones, and progress visibility.", engineering: ["Flutter mobile experience for structured learning journeys.", "Screens for planning, following, and reviewing learning paths.", "Clear presentation of progress across a multi-screen flow."], impact: "Helps learners turn broad cybersecurity learning goals into visible, actionable paths." }, fr: { desc: "Une application mobile d’apprentissage qui crée des parcours d’étude personnalisés et suit la progression." } },
+  { title: "Maestro", tech: "Flutter, Dart, BLoC", image: "/assets/maestro/mobile1.jpg", github: "https://github.com/tedyclivel/Maestro", mobileImages: [1, 2, 3, 4, 5, 6, 7].map((n) => `/assets/maestro/mobile${n}.jpg`), en: { desc: "The mobile companion app for Kouture & Maestro, helping tailors manage orders, activity, and workflow on the go.", challenge: "Tailors need access to operational information while away from a desktop workspace.", solution: "Built a focused mobile companion for order management and daily business workflows.", engineering: ["Flutter and Dart application architecture with BLoC.", "Mobile screens tailored to operational tasks and order visibility.", "Reusable views for a cohesive end-to-end workflow."], impact: "Brings the core tailoring workflow into a focused mobile experience." }, fr: { desc: "L’application mobile compagnon de Kouture & Maestro, pour gérer commandes, activité et flux de travail partout." } },
+  { title: "Tedy Portfolio", tech: "React, Vite, JavaScript, CSS, Cloudflare Pages", image: portfolioPreview, github: "https://github.com/tedyclivel/portfolio", en: { desc: "A personal portfolio presenting my engineering experience, technical skills, and software projects.", challenge: "A portfolio should communicate both product craft and engineering judgement to recruiters.", solution: "Built a responsive, accessible project showcase with an interactive visual identity.", engineering: ["React and Vite application with reusable portfolio sections.", "Responsive layouts, semantic navigation, and accessible image descriptions.", "Performance-minded assets and production deployment on Cloudflare Pages."], impact: "Provides a single, recruiter-friendly view of my work, skills, and public code." }, fr: { desc: "Un portfolio personnel présentant mon expérience d’ingénierie, mes compétences techniques et mes projets logiciels." } },
 ];
 
-const projects = [
-  ...spotlightProjects.map(({ title, desc, tech, github }) => ({ title, desc, tech, github })),
-];
+const withLanguage = (project, language) => {
+  const translation = { ...project.en, ...(project[language] || {}) };
+  return { ...project, details: translation, desc: translation.desc };
+};
 
-const Projects = () => (
-  <div id="projects">
-    <div className="section-header">
-      <span className="section-title">/ projects</span>
-      <a href="https://github.com/tedyclivel" className="explore-link" target="_blank" rel="noopener noreferrer">
-        View GitHub
-      </a>
-    </div>
-    <div className="spotlight-projects-desktop">
-      <Carousel interval={null}>
-        {spotlightProjects.map((project) => (
-          <Carousel.Item key={project.title}>
-            {project.mobileImages ? (
-              <div className="desktop-project-gallery">
-                {project.mobileImages.map((image, imageIndex) => (
-                  <img
-                    key={image}
-                    src={image}
-                    alt={project.title + " mobile screen " + (imageIndex + 1)}
-                  />
-                ))}
-              </div>
-            ) : (
-              <img className="d-block w-100" src={project.image} alt={project.title} />
-            )}
-            <Carousel.Caption>
-              <h3>{project.title}</h3>
-              <div>
-                {project.desc}
-                <div className="techStack">{project.tech}</div>
-              </div>
-              <ExternalLinks githubLink={project.github || githubProfile} openLink={linkedinProfile} />
-            </Carousel.Caption>
-          </Carousel.Item>
-        ))}
-      </Carousel>
-    </div>
-    <div className="spotlight-projects-mobile">
-      {spotlightProjects.map((project, i) => (
-        <FadeInSection key={project.title} delay={(i + 1) * 100 + "ms"}>
-          <div className="projects-card">
-            <div className="card-header">
-              <div className="folder-icon">
-                <FolderOpenRoundedIcon sx={{ fontSize: 35 }} />
-              </div>
-              <ExternalLinks githubLink={project.github || githubProfile} openLink={linkedinProfile} />
-            </div>
-            <div className="card-title">{project.title}</div>
-            <div className="spotlight-mobile-image">
-              <img src={project.image} alt={project.title} />
-            </div>
-            {project.mobileImages && (
-              <div className="mobile-project-gallery">
-                {project.mobileImages.map((image, imageIndex) => (
-                  <img
-                    key={image}
-                    src={image}
-                    alt={project.title + " mobile screen " + (imageIndex + 1)}
-                  />
-                ))}
-              </div>
-            )}
-            <div className="card-desc">{project.desc}</div>
-            <div className="card-tech">{project.tech}</div>
-          </div>
-        </FadeInSection>
-      ))}
-    </div>
-    <div className="project-container">
-      <ul className="projects-grid">
-        {projects.map((project, i) => (
-          <FadeInSection key={project.title} delay={(i + 1) * 100 + "ms"}>
-            <li className="projects-card">
-              <div className="card-header">
-                <div className="folder-icon">
-                  <FolderOpenRoundedIcon sx={{ fontSize: 35 }} />
-                </div>
-                <ExternalLinks githubLink={project.github || githubProfile} openLink={linkedinProfile} />
-              </div>
-              <div className="card-title">{project.title}</div>
-              <div className="card-desc">{project.desc}</div>
-              <div className="card-tech">{project.tech}</div>
-            </li>
-          </FadeInSection>
-        ))}
-      </ul>
-    </div>
-  </div>
-);
+const Projects = ({ language }) => {
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showAllProjects, setShowAllProjects] = useState(false);
+  const projects = projectDetails.map((project) => withLanguage(project, language));
+  const visibleProjects = showAllProjects ? projects : projects.slice(0, 6);
+  const copy = language === "fr" ? { title: "/ projets", github: "Voir GitHub", study: "Voir l’étude de cas", showAll: "Voir tous les projets", showLess: "Afficher moins" } : { title: "/ projects", github: "View GitHub", study: "View case study", showAll: "View all projects", showLess: "Show fewer" };
+  const openImage = (image, alt) => setSelectedImage({ image, alt });
+  const card = (project, detailed = false) => <div className="projects-card"><div className="card-header"><div className="folder-icon"><FolderOpenRoundedIcon sx={{ fontSize: 35 }} /></div><ExternalLinks githubLink={project.github || githubProfile} openLink={linkedinProfile} /></div><div className="card-title">{project.title}</div>{detailed && <><div className="spotlight-mobile-image"><button type="button" className="project-image-button" onClick={() => openImage(project.image, `${project.title} project preview`)} aria-label={`${project.title}: ${language === "fr" ? "agrandir l’image" : "enlarge image"}`}><img src={project.image} alt={`${project.title} project preview`} loading="lazy" decoding="async" /></button></div>{project.mobileImages && <div className="mobile-project-gallery">{project.mobileImages.map((image, index) => <button type="button" className="project-image-button" key={image} onClick={() => openImage(image, `${project.title} screen ${index + 1}`)} aria-label={`${project.title} screen ${index + 1}: ${language === "fr" ? "agrandir l’image" : "enlarge image"}`}><img src={image} alt={`${project.title} screen ${index + 1}`} loading="lazy" decoding="async" /></button>)}</div>}</>}<div className="card-desc">{project.desc}</div><button type="button" className="project-badge" onClick={() => setSelectedProject(project)}>{copy.study}</button><div className="card-tech">{project.tech}</div></div>;
+
+  return <div id="projects"><div className="section-header"><span className="section-title">{copy.title}</span><a href={githubProfile} className="explore-link" target="_blank" rel="noopener noreferrer">{copy.github}</a></div><div className="spotlight-projects-desktop"><Carousel interval={null}>{visibleProjects.map((project) => <Carousel.Item key={project.title}>{project.mobileImages ? <div className="desktop-project-gallery">{project.mobileImages.map((image, index) => <button type="button" className="project-image-button" key={image} onClick={() => openImage(image, `${project.title} screen ${index + 1}`)} aria-label={`${project.title} screen ${index + 1}: ${language === "fr" ? "agrandir l’image" : "enlarge image"}`}><img src={image} alt={`${project.title} screen ${index + 1}`} loading="lazy" decoding="async" /></button>)}</div> : <button type="button" className="carousel-project-preview project-image-button" onClick={() => openImage(project.image, `${project.title} project preview`)} aria-label={`${project.title}: ${language === "fr" ? "agrandir l’image" : "enlarge image"}`}><img className="d-block w-100" src={project.image} alt={`${project.title} project preview`} decoding="async" /></button>}<Carousel.Caption><h3>{project.title}</h3><div>{project.desc}<div className="techStack">{project.tech}</div></div><button type="button" className="project-badge" onClick={() => setSelectedProject(project)}>{copy.study}</button><ExternalLinks githubLink={project.github || githubProfile} openLink={linkedinProfile} /></Carousel.Caption></Carousel.Item>)}</Carousel></div><div className="spotlight-projects-mobile">{visibleProjects.map((project, i) => <FadeInSection key={project.title} delay={`${(i + 1) * 100}ms`}>{card(project, true)}</FadeInSection>)}</div><div className="project-container"><ul className="projects-grid">{visibleProjects.map((project, i) => <FadeInSection key={project.title} delay={`${(i + 1) * 100}ms`}><li>{card(project)}</li></FadeInSection>)}</ul></div>{projects.length > 6 && <div className="projects-toggle"><button type="button" className="project-badge" onClick={() => setShowAllProjects((visible) => !visible)} aria-expanded={showAllProjects}>{showAllProjects ? copy.showLess : copy.showAll}</button></div>}<ProjectDetailsModal project={selectedProject} onHide={() => setSelectedProject(null)} language={language} onImageSelect={openImage} /><ImageLightbox image={selectedImage?.image} alt={selectedImage?.alt} onClose={() => setSelectedImage(null)} language={language} /></div>;
+};
 
 export default Projects;
